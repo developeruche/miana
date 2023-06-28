@@ -1,7 +1,8 @@
 use std::fs;
 use std::error::Error;
 
-enum Template {
+#[derive(Debug)]
+pub enum Template {
     HardhatJS, // hardatjs | hjs
     HardhatTs, // hardatts | hts
     HardhatFoundry, // hardatfoundry | hf
@@ -9,67 +10,73 @@ enum Template {
 }
 
 
+#[derive(Debug)]
 pub struct Config {
     pub command: String,
     pub project_name: String,
     pub template: Template,
     pub isModular: bool,
-    pub raw: [String]
+    pub raw: Vec<String>
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
+    pub fn new(args: Vec<String>) -> Config {
         // Check if the number of args is correct
         if args.len() < 3 {
-            return Err("not enough arguments");
+            panic!("not enough arguments");
         }
+         let is_modular_flag = String::from("--modular");
+         let template_flag = String::from("--template");
 
         // Extracting the args from env::args
         let command = args[1].clone();
         let project_name = args[2].clone();
-        let is_modular = args.contains("--modular");
+        let is_modular = args.contains(&is_modular_flag);
+        let template_name: String;
 
         if command != "init" {
-            return Err("command not found");
+            panic!("command not found");
         }
 
         if project_name == "" {
-            return Err("project name not found");
+            panic!("project name not found");
         }
 
-        if args.contains("--template") {
+        if args.contains(&template_flag) {
             // get the index of the template flag
             let index = args.iter().position(|r| r == "--template").unwrap();
             
-            // check if the template name is empty
-            if args[index + 1] == "" {
-                return Err("template name not found");
+            if let Some(value) = args.get(index + 1) {
+                if value == &String::from("") {
+                    panic!("bad template name");
+                }
+                
+                template_name = value.clone();
+            } else {
+                panic!("template name not found");
             }
 
-            // get the template name
-            let template_name = args[index + 1].clone();
-
             match template_name.as_str() {
-                "hardatjs" | "hjs" => {
-                    return Ok(Config { command, project_name, template: Template::HardhatJS, isModular: is_modular, raw: args.clone() });
+                "hardhatjs" | "hjs" => {
+                    return Config { command, project_name, template: Template::HardhatJS, isModular: is_modular, raw: args.clone() };
                 },
-                "hardatts" | "hts" => {
-                    return Ok(Config { command, project_name, template: Template::HardhatTs, isModular: is_modular, raw: args.clone() });
+                "hardhatts" | "hts" => {
+                    return Config { command, project_name, template: Template::HardhatTs, isModular: is_modular, raw: args.clone() };
                 },
-                "hardatfoundry" | "hf" => {
-                    return Ok(Config { command, project_name, template: Template::HardhatFoundry, isModular: is_modular, raw: args.clone() });
+                "hardhatfoundry" | "hf" => {
+                    return Config { command, project_name, template: Template::HardhatFoundry, isModular: is_modular, raw: args.clone() };
                 },
                 "foundry" | "f" => {
-                    return Ok(Config { command, project_name, template: Template::Foundry, isModular: is_modular, raw: args.clone() });
+                    return Config { command, project_name, template: Template::Foundry, isModular: is_modular, raw: args.clone() };
                 },
                 _ => {
-                    return Err("template not found");
+                    panic!("template not found");
                 }
             }
             
         }
         // Return the Config struct
-        Ok(Config { command, project_name, template: HardhatJS, isModular: false, raw: args.clone() })
+        Config { command, project_name, template: Template::HardhatJS, isModular: false, raw: args.clone()}
     }
 }
 
@@ -77,11 +84,7 @@ impl Config {
 
 
 pub fn pull(config: Config) -> Result<(), Box<dyn Error>> { // the error type would be determined at run-time
-    let contents = fs::read_to_string(config.filename)?;
-
-    println!("With text:\n{}", contents);
-
-    Ok(())
+    todo!("pull command not implemented yet");  
 }
 
 
