@@ -19,8 +19,6 @@ pub const GIT_MOD_HARDHAT: &str = "https://github.com/developeruche/modularized-
 
 
 
-
-#[derive(Debug)]
 pub enum Template {
     HardhatJS, // hardatjs | hjs
     HardhatTs, // hardatts | hts
@@ -29,7 +27,6 @@ pub enum Template {
 }
 
 
-#[derive(Debug)]
 pub struct Config {
     pub command: String,
     pub project_name: String,
