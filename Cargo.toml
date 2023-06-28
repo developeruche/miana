@@ -2,6 +2,8 @@
 name = "miana"
 version = "0.1.0"
 edition = "2021"
+description = "The is a boilerplate creating tool for diamond standard, it covers diamond standard with Hardhat(JavaScript), Hardhat(Type Script), Foundry, Foundry + Hardhat and the Modular flavour of all this code base."
+license = "MIT"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
