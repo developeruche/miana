@@ -23,9 +23,35 @@ pub const GIT_MOD_HARDHAT: &str = "https://github.com/developeruche/modularized-
 ```
 
 ## Creating a Diamond Standard project 
+Creating a the Diamond Standard project uses different flags to determine the exact type of project to scafold (hardhat typescript: hts, hardhat javascript: hjs, foundry: f)
 
+`--modular` makes the project come with a special modular structure.
+
+Examples:
+
+1. Hardhat Typescript:
+```sh
+  miana init project_name --template hts
 ```
-  miana init project_name --template [f | hts | hjs | hf] --modular
+
+2. Hardhat JavaScript:
+```sh
+  miana init project_name --template hjs
+```
+
+3. Foundry:
+```sh
+  miana init project_name --template f
+```
+
+4. Modular Hardhat TypeScript:
+```sh
+  miana init project_name --template hts --modular
+```
+
+5. Modular Foundry:
+```sh
+  miana init project_name --template f --modular
 ```
 
 ### --template 
