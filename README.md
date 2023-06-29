@@ -25,7 +25,7 @@ pub const GIT_MOD_HARDHAT: &str = "https://github.com/developeruche/modularized-
 ## Creating a Diamond Standard project 
 
 ```
-  miana init project_name --template [f | hts | hjs | f] --modular
+  miana init project_name --template [f | hts | hjs | hf] --modular
 ```
 
 ### --template 
